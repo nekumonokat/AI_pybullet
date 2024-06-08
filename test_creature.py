@@ -37,4 +37,22 @@ class CreatureTest(unittest.TestCase):
         cid = p.loadURDF("test.urdf")
         self.assertIsNotNone(cid)
 
+    def testMotor(self):
+        m = creature.Motor(0.1, 0.5, 0.5)
+        self.assertIsNotNone(m)
+
+    def testMotorPulse(self):
+        m = creature.Motor(0.1, 0.5, 0.5) # should be PULSE
+        self.assertEqual(m.get_output(), 1)
+
+    def testMotorSine(self):
+        m = creature.Motor(0.6, 0.5, 0.5) # should be SINE
+        self.assertGreater(m.get_output(), 0)
+
+    def testCreatureMotor(self):
+        c = creature.Creature(gene_count = 4)
+        ls = c.get_expanded_links()
+        ms = c.get_motors()
+        self.assertEqual(len(ls) - 1, len(ms))
+
 unittest.main()
