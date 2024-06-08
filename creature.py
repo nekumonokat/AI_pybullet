@@ -1,4 +1,4 @@
-from enum import Enum
+from enum import Enum # makes code more readable
 import numpy as np
 import genome
 from xml.dom.minidom import getDOMImplementation
