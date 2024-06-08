@@ -1,0 +1,18 @@
+phase 1:
+flat_links = []
+
+iterate over genes
+    for each gene create link
+    - assign each link a unique name
+    - decide parent link name
+    - add to flat link array
+
+phase 2:
+expanded_links = []
+
+def expandLinks(parent_link, flat_links, expanded_links)
+    children = get_children_for_parent(parent_link)
+    for child in children:
+        for recur in child.recur:
+            expanded_links.append(copy of child)
+            expandLinks(child, flat_links, expanded_links)
