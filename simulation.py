@@ -8,6 +8,10 @@ class Simulation():
         pid = self.physicsClientId
         p.resetSimulation(physicsClientId = pid)
         p.setGravity(0, 0, -10, physicsClientId = pid)
+        p.setPhysicsEngineParameter(enableFileCaching = 0, physicsClientId = pid)
+
+        floor_shape = p.createCollisionShape(p.GEOM_PLANE, physicsClientId = pid)
+        floor = p.createMultiBody(floor_shape, floor_shape)
 
         xml_file = "temp.urdf"
         xml_str = cr.to_xml()
@@ -16,6 +20,7 @@ class Simulation():
             f.write(xml_str)
 
         cid = p.loadURDF(xml_file, physicsClientId = pid)
+        p.resetBasePositionAndOrientation(cid, [0, 0, 3], [0, 0, 0, 1], physicsClientId = pid)
 
         # stepping through simulation
         for step in range(iterations):
