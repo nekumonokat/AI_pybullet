@@ -6,7 +6,7 @@ p.setPhysicsEngineParameter(enableFileCaching = 0)
 p.configureDebugVisualizer(p.COV_ENABLE_GUI, 0)
 floor_shape = p.createCollisionShape(p.GEOM_PLANE)
 floor = p.createMultiBody(floor_shape, floor_shape)
-c = p.loadURDF("test.urdf")
+c = p.loadURDF("temp.urdf")
 p.resetBasePositionAndOrientation(c, [0, 0, 3], [0, 0, 0, 1])
 
 p.setGravity(0, 0, -10) # x, z, y
