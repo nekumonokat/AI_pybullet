@@ -1,7 +1,7 @@
 import unittest
 import creature
 import pybullet as p
-
+import simulation
 class CreatureTest(unittest.TestCase):
     def testCreatureExists(self):
         self.assertIsNotNone(creature.Creature)
@@ -54,5 +54,13 @@ class CreatureTest(unittest.TestCase):
         ls = c.get_expanded_links()
         ms = c.get_motors()
         self.assertEqual(len(ls) - 1, len(ms))
+
+    def testDist(self):
+        c = creature.Creature(3)
+        c.update_position((0, 0, 0))
+        d1 = c.get_distance_travelled()
+        c.update_position((1, 1, 1))
+        d2 = c.get_distance_travelled()
+        self.assertGreater(d2, d1)
 
 unittest.main()
