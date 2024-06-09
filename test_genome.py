@@ -4,7 +4,7 @@ import genome
 import numpy as np
 from xml.dom.minidom import getDOMImplementation
 
-class GenomeTest(unittest.TestCase):
+class TestGenome(unittest.TestCase):
 
     def testClassExists(self):
         self.assertIsNotNone(genome.Genome)
@@ -114,6 +114,5 @@ class GenomeTest(unittest.TestCase):
         adom = domimpl.createDocument(None, "robot", None)
         xml_str = link.to_joint_xml(adom)
         self.assertIsNotNone(xml_str)
-
 
 unittest.main()

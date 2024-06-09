@@ -2,7 +2,7 @@ import unittest
 import creature
 import pybullet as p
 import simulation
-class CreatureTest(unittest.TestCase):
+class TestCreature(unittest.TestCase):
     def testCreatureExists(self):
         self.assertIsNotNone(creature.Creature)
 
@@ -30,7 +30,7 @@ class CreatureTest(unittest.TestCase):
 
         # writes as a new URDF file
         with open("test.urdf", "w") as f:
-            f.write('<?xml version = "1.0"?>' + "\n" + xml_str)
+            f.write(xml_str)
 
         # self.assertIsNotNone(xml_str)
         p.connect(p.DIRECT)

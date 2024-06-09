@@ -13,7 +13,7 @@ class Simulation():
         p.setPhysicsEngineParameter(enableFileCaching = 0, physicsClientId = pid)
 
         floor_shape = p.createCollisionShape(p.GEOM_PLANE, physicsClientId = pid)
-        floor = p.createMultiBody(floor_shape, floor_shape)
+        floor = p.createMultiBody(floor_shape, floor_shape, physicsClientId = pid)
 
         xml_file = "temp" + str(self.sim_id) + ".urdf"
         xml_str = cr.to_xml()
@@ -22,7 +22,7 @@ class Simulation():
             f.write(xml_str)
 
         cid = p.loadURDF(xml_file, physicsClientId = pid)
-        p.resetBasePositionAndOrientation(cid, [0, 0, 3], [0, 0, 0, 1], physicsClientId = pid)
+        p.resetBasePositionAndOrientation(cid, [0, 0, 2.5], [0, 0, 0, 1], physicsClientId = pid)
 
         # stepping through simulation
         for step in range(iterations):
@@ -41,7 +41,8 @@ class Simulation():
         """
 
         # get iterate through each joint and controlling the motors
-        for jid in range(p.getNumJoints(cid,physicsClientId = self.physicsClientId)):
+        for jid in range(p.getNumJoints(cid, physicsClientId = self.physicsClientId)):
+
             m = cr.get_motors()[jid]
             p.setJointMotorControl2(cid, jid,
                                     controlMode = p.VELOCITY_CONTROL,
@@ -52,7 +53,6 @@ class Simulation():
         for cr in pop.creatures:
             self.run_creature(cr, 2400)
 
-            
 # doesn't work on windows
 class ThreadedSim():
     def __init__(self, pool_size):

@@ -55,10 +55,8 @@ class Genome():
     @staticmethod
     def get_genome_dicts(dna, spec):
         genome_dicts = []
-
         for gene in dna:
             genome_dicts.append(Genome.get_gene_dict(gene, spec))
-
         return genome_dicts
     
     @staticmethod
@@ -151,7 +149,6 @@ class URDFLink():
         self.control_waveform = control_waveform
         self.control_amp = control_amp
         self.control_freq = control_freq
-
         # to resolve geometry issue
         self.sibling_idx = 1
 

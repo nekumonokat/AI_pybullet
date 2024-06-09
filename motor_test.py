@@ -9,6 +9,7 @@ p.configureDebugVisualizer(p.COV_ENABLE_GUI, 0)
 floor_shape = p.createCollisionShape(p.GEOM_PLANE)
 floor = p.createMultiBody(floor_shape, floor_shape)
 p.setGravity(0, 0, -10) # x, z, y
+p.setRealTimeSimulation(1)
 
 c = creature.Creature(gene_count = 5)
 with open("test.urdf", "w") as f:
@@ -16,9 +17,12 @@ with open("test.urdf", "w") as f:
     f.write(c.to_xml())
 
 cid = p.loadURDF("test.urdf")
-p.setRealTimeSimulation(1)
 p.resetBasePositionAndOrientation(cid, [0, 0, 3], [0, 0, 0, 1])
 c.update_position([0, 0, 0])
+
+elapsed_time = 0
+wait_time = 0.1 # seconds
+total_time = 5 # seconds
 
 # keeps simulation running
 while True:
@@ -32,7 +36,13 @@ while True:
     # checking that youre getting distance travelled
     pos, orn = p.getBasePositionAndOrientation(cid)
     c.update_position(pos)
-    print(c.get_distance_travelled())
+    dist = c.get_distance_travelled()
+    print(dist)
 
-    p.stepSimulation()
-    time.sleep(0.1)
+    # p.stepSimulation()
+    time.sleep(wait_time)
+    elapsed_time += wait_time
+    if elapsed_time > total_time:
+        break
+
+print("TOTAL DIST MOVED:", dist)

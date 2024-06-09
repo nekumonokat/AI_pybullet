@@ -41,7 +41,7 @@ class TestSimulation(unittest.TestCase):
         # print("distance travelled:", dist)
         self.assertGreater(dist, 0)
 
-    def testPop(self):
+    def testPopulationExists(self):
         pop = population.Population(pop_size = 20, gene_count = 4)
         sim = simulation.Simulation()
 
