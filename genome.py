@@ -121,9 +121,19 @@ class Genome():
     
     @staticmethod
     def crossover(g1, g2):
+        """
+        g1 and g2 are raw dna data - lists of lists of floats
+        """
+
         xo = np.random.randint(len(g1))
+
+        if xo == 0:
+            return g2
+        if xo == len(g1) - 1:
+            return g1
         if xo > len(g2):
             xo = len(g2) - 1
+
         g3 = np.concatenate((g1[0:xo], g2[xo:]))
         return g3
     
@@ -140,9 +150,14 @@ class Genome():
                 # scales [-0.5 to 0.5] by the amount
                 r = np.random.rand() - 0.5 * amount
                 gene[idx] += r
+        
+        return genes
 
     @staticmethod
     def shrink_mutate(genes, rate):
+        if len(genes) == 1:
+            return genes
+        
         if np.random.rand() < rate:
             idx = np.random.randint(len(genes))
             genes = np.delete(genes, idx, 0)
