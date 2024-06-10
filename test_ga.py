@@ -43,6 +43,8 @@ class TestGA(unittest.TestCase):
                 new_gen.append(cr)
             
             new_gen[0] = elite
+            csv_filename = str(generation) + "_elite.csv"
+            genlib.Genome.to_csv(elite.dna, csv_filename)
             # replacing current population with new generation
             pop.creatures = new_gen
 

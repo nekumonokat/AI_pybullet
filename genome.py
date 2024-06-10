@@ -138,37 +138,66 @@ class Genome():
         return g3
     
     @staticmethod
-    def point_mutate(genes, rate, amount):
+    def point_mutate(dna, rate, amount):
         """
         rate: per gene how likely it is to mutate
         amount: how much it's gonna mutated by
         """
         
-        for gene in genes:
+        for gene in dna:
             if np.random.rand() < rate:
                 idx = np.random.randint(len(gene))
                 # scales [-0.5 to 0.5] by the amount
                 r = np.random.rand() - 0.5 * amount
                 gene[idx] += r
         
-        return genes
+        return dna
 
     @staticmethod
-    def shrink_mutate(genes, rate):
-        if len(genes) == 1:
-            return genes
+    def shrink_mutate(dna, rate):
+        if len(dna) == 1:
+            return dna
         
         if np.random.rand() < rate:
-            idx = np.random.randint(len(genes))
-            genes = np.delete(genes, idx, 0)
-        return genes
+            idx = np.random.randint(len(dna))
+            dna = np.delete(dna, idx, 0)
+        return dna
     
     @staticmethod
-    def grow_mutate(genes, rate):
+    def grow_mutate(dna, rate):
         if np.random.rand() < rate:
-            new_gene = Genome.get_random_gene(len(genes[0]))
-            genes = np.append(genes, [new_gene], axis = 0)
-        return genes
+            new_gene = Genome.get_random_gene(len(dna[0]))
+            dna = np.append(dna, [new_gene], axis = 0)
+        return dna
+    
+    @staticmethod
+    def to_csv(dna, csv_file):
+        csv_str = ""
+
+        for gene in dna:
+            for value in gene:
+                csv_str += str(value) + ","
+            csv_str += "\n"
+
+        with open(csv_file, "w") as f:
+            f.write(csv_str)
+
+    @staticmethod
+    def from_csv(csv_file):
+        csv_str = ""
+
+        with open(csv_file) as f:
+            csv_str = f.read()
+        
+        dna = []
+        lines = csv_str.split("\n")
+        for line in lines:
+            vals = line.split(",")
+            gene = [float(v) for v in vals if v != ""]
+            if len(gene) > 0:
+                dna.append(gene)
+
+        return dna
     
 class URDFLink():
     def __init__( self, name, parent_name, recur,

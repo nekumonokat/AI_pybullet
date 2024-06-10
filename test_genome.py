@@ -3,6 +3,7 @@ import unittest
 import genome
 import numpy as np
 from xml.dom.minidom import getDOMImplementation
+import os
 
 class TestGenome(unittest.TestCase):
 
@@ -144,4 +145,37 @@ class TestGenome(unittest.TestCase):
         g2 = genome.Genome.grow_mutate(g1, rate = 1)
         # print(g2, "(after)")
         self.assertGreater(len(g2), len(g1))
+
+    def testToCSV(self):
+        g1 = [[1,2,3]]
+        genome.Genome.to_csv(g1, "test.csv")
+        self.assertTrue(os.path.exists("test.csv"))
+
+    def testToCSVContents(self):
+        g1 = [[1,2,3]]
+        genome.Genome.to_csv(g1, "test.csv")
+        expect = "1,2,3,\n"
+
+        with open("test.csv") as f:
+            csv_str = f.read()
+
+        self.assertEqual(csv_str, expect)
+
+    def testToCSVContents(self):
+        g1 = [[1,2,3], [4,5,6]]
+        genome.Genome.to_csv(g1, "test.csv")
+        expect = "1,2,3,\n4,5,6,\n"
+
+        with open("test.csv") as f:
+            csv_str = f.read()
+
+        self.assertEqual(csv_str, expect)
+
+    def testFromCSV(self):
+        g1 = [[1,2,3], [4,5,6]]
+        genome.Genome.to_csv(g1, "test.csv")
+        g2 = genome.Genome.from_csv("test.csv")
+        self.assertTrue(np.array_equal(g1, g2))
+
+
 unittest.main()
