@@ -1,3 +1,4 @@
+# HYPERPARAMETER TUNING
 # NOT UNIT TESTING
 import pybullet as p
 import time
@@ -12,8 +13,9 @@ floor = p.createMultiBody(floor_shape, floor_shape)
 p.setGravity(0, 0, -10) # x, z, y
 p.setRealTimeSimulation(1)
 
-c = creature.Creature(gene_count = 5)
-dna = genlib.Genome.from_csv("9_elite.csv") 
+# HYPERPARAMETER TUNING: (same as test_ga)
+c = creature.Creature(gene_count = 3)
+dna = genlib.Genome.from_csv("80_elite.csv") 
 c.set_dna(dna)
 
 with open("test.urdf", "w") as f:
@@ -35,6 +37,7 @@ while True:
     
     # checking that youre getting distance travelled
     pos, orn = p.getBasePositionAndOrientation(cid)
+    p.resetDebugVisualizerCamera(8, 0, 200, pos)
     c.update_position(pos)
     dist = c.get_distance_travelled()
     print(dist)

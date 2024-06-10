@@ -4,48 +4,62 @@ import simulation as simlib
 import creature as crlib
 import genome as genlib
 import numpy as np
+import csv
 
 class TestGA(unittest.TestCase):
     def testGA(self):
-        pop = poplib.Population(pop_size = 10, gene_count = 3)
+
+        # HYPERPARAMETER TUNING:
+        pop_size = 200
+        gene_count = 3
+        gen_count = 10
+
+        pop = poplib.Population(pop_size = pop_size, gene_count = gene_count)
         sim = simlib.Simulation()
+        summary_file = "summary.csv"
+        mid_gen_count = gen_count // 2
 
-        for generation in range(10):
-            sim.eval_population(pop, 2400)
-            fits = [cr.get_distance_travelled() for cr in pop.creatures]
-            fitmap = poplib.Population.get_fitness_map(fits)
-            print("gen:", generation, "max:", np.max(fits), "mean:", np.mean(fits))
-            
-            # keeping the fittest creature (elitism)
-            fmax = np.max(fits)
-            for cr in pop.creatures:
-                if cr.get_distance_travelled() == fmax:
-                    elite = cr
-                    break
-            
-            new_gen = []
-            for cid in range(len(pop.creatures)):
-                p1_idx = poplib.Population.select_parent(fitmap)
-                p2_idx = poplib.Population.select_parent(fitmap)
+        with open(summary_file, "w", newline = "") as f:
+            for generation in range(gen_count):
+                sim.eval_population(pop, 2400)
+                fits = [cr.get_distance_travelled() for cr in pop.creatures]
+                fitmap = poplib.Population.get_fitness_map(fits)
 
-                # conducting crossover
-                dna = genlib.Genome.crossover(pop.creatures[p1_idx].dna,
-                                            pop.creatures[p2_idx].dna)
+                print("gen:", generation, "max:", np.max(fits), "mean:", np.mean(fits))
+                fmax = np.max(fits)
+                fmean = np.mean(fits)
+                f.write(f"gen: {generation} max: {fmax} mean: {fmean}")
                 
-                # conducting mutations
-                dna = genlib.Genome.point_mutate(dna, 0.1, 0.25)
-                dna = genlib.Genome.grow_mutate(dna, 0.25)
-                dna = genlib.Genome.shrink_mutate(dna, 0.25)
+                # keeping the fittest creature (elitism)
+                for cr in pop.creatures:
+                    if cr.get_distance_travelled() == fmax:
+                        elite = cr
+                        break
+                
+                new_gen = []
+                for cid in range(len(pop.creatures)):
+                    p1_idx = poplib.Population.select_parent(fitmap)
+                    p2_idx = poplib.Population.select_parent(fitmap)
 
-                # creating the creature and appending into new generation
-                cr = crlib.Creature(1)
-                cr.set_dna(dna)
-                new_gen.append(cr)
-            
-            new_gen[0] = elite
-            csv_filename = str(generation) + "_elite.csv"
-            genlib.Genome.to_csv(elite.dna, csv_filename)
-            # replacing current population with new generation
-            pop.creatures = new_gen
+                    # conducting crossover
+                    dna = genlib.Genome.crossover(pop.creatures[p1_idx].dna,
+                                                pop.creatures[p2_idx].dna)
+
+                    # conducting mutations
+                    dna = genlib.Genome.point_mutate(dna, 0.1, 0.25)
+                    dna = genlib.Genome.grow_mutate(dna, 0.25)
+                    dna = genlib.Genome.shrink_mutate(dna, 0.25)
+
+                    # creating the creature and appending into new generation
+                    cr = crlib.Creature(gene_count = gene_count)
+                    cr.set_dna(dna)
+                    new_gen.append(cr)
+                
+                new_gen[0] = elite
+                # replacing current population with new generation
+                pop.creatures = new_gen
+
+                if generation in [0, mid_gen_count, gen_count-1]:
+                    genlib.Genome.to_csv(elite.dna, str(generation) + "_elite.csv")
 
 unittest.main()

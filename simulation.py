@@ -7,32 +7,36 @@ class Simulation():
         self.sim_id = sim_id
 
     def run_creature(self, cr, iterations = 2400):
-        pid = self.physicsClientId
-        p.resetSimulation(physicsClientId = pid)
-        p.setGravity(0, 0, -10, physicsClientId = pid)
-        p.setPhysicsEngineParameter(enableFileCaching = 0, physicsClientId = pid)
+        # highly recursive creatures crash pybullet
+        try:
+            pid = self.physicsClientId
+            p.resetSimulation(physicsClientId = pid)
+            p.setGravity(0, 0, -10, physicsClientId = pid)
+            p.setPhysicsEngineParameter(enableFileCaching = 0, physicsClientId = pid)
 
-        floor_shape = p.createCollisionShape(p.GEOM_PLANE, physicsClientId = pid)
-        floor = p.createMultiBody(floor_shape, floor_shape, physicsClientId = pid)
+            floor_shape = p.createCollisionShape(p.GEOM_PLANE, physicsClientId = pid)
+            floor = p.createMultiBody(floor_shape, floor_shape, physicsClientId = pid)
 
-        xml_file = "temp" + str(self.sim_id) + ".urdf"
-        xml_str = cr.to_xml()
+            xml_file = "temp" + str(self.sim_id) + ".urdf"
+            xml_str = cr.to_xml()
 
-        with open(xml_file, "w") as f:
-            f.write(xml_str)
+            with open(xml_file, "w") as f:
+                f.write(xml_str)
 
-        cid = p.loadURDF(xml_file, physicsClientId = pid)
-        p.resetBasePositionAndOrientation(cid, [0, 0, 2.5], [0, 0, 0, 1], physicsClientId = pid)
+            cid = p.loadURDF(xml_file, physicsClientId = pid)
+            p.resetBasePositionAndOrientation(cid, [0, 0, 2.5], [0, 0, 0, 1], physicsClientId = pid)
 
-        # stepping through simulation
-        for step in range(iterations):
-            p.stepSimulation(physicsClientId = pid)
-            if step % 24 == 0:
-                self.update_motors(cid, cr)
-            
-            # updating the position
-            pos, orn = p.getBasePositionAndOrientation(cid, physicsClientId = pid)
-            cr.update_position(pos)
+            # stepping through simulation
+            for step in range(iterations):
+                p.stepSimulation(physicsClientId = pid)
+                if step % 24 == 0:
+                    self.update_motors(cid, cr)
+                
+                # updating the position
+                pos, orn = p.getBasePositionAndOrientation(cid, physicsClientId = pid)
+                cr.update_position(pos)
+        except:
+            print("sim failed cr links:", len(cr.get_expanded_links()))
 
     def update_motors(self, cid, cr):
         """

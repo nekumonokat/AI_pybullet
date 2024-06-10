@@ -90,7 +90,8 @@ class Genome():
             link_name = str(link_idx)
             # finding parent index and link recurrence from gdict
             parent_idx = gdict["joint-parent"] * len(parent_names)
-            parent_name = parent_names[int(parent_idx)]
+            # ISSUE: range exceeded - solved by modulo
+            parent_name = parent_names[int(parent_idx) % len(parent_names)]
             recur = gdict["link-recurrence"]
 
             # setting recurrence to > 0
@@ -134,7 +135,7 @@ class Genome():
         if xo > len(g2):
             xo = len(g2) - 1
 
-        g3 = np.concatenate((g1[0:xo], g2[xo:]))
+        g3 = np.concatenate((g1[:xo], g2[xo:]))
         return g3
     
     @staticmethod
