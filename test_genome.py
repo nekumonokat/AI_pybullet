@@ -115,4 +115,33 @@ class TestGenome(unittest.TestCase):
         xml_str = link.to_joint_xml(adom)
         self.assertIsNotNone(xml_str)
 
+    def testCrossover(self):
+        g1 = np.array([[1,2,3], [4,5,6], [7,8,9]])
+        g2 = np.array([[10,11,12], [13,14,15], [16,17,18]])
+        g3 = genome.Genome.crossover(g1, g2)
+        # print(g3)
+        self.assertEqual(len(g3), len(g1))
+
+    def testPointMutation(self):
+        g1 = np.array([[1.0,2.0,3.0], [4.0,5.0,6.0], [7.0,8.0,9.0]])
+        # print(g1, "(before)")
+        # (rate of 1 used to confirm mutation works)
+        g2 = genome.Genome.point_mutate(g1, rate = 1, amount = 0.25)
+        # print(g2, "(after)")
+
+    def testShrinkMutation(self):
+        g1 = np.array([[1.0,2.0,3.0], [4.0,5.0,6.0], [7.0,8.0,9.0]])
+        # print(g1, "(before)")
+        # (rate of 1 used to confirm mutation works)
+        g2 = genome.Genome.shrink_mutate(g1, rate = 1)
+        # print(g2, "(after)")
+        self.assertNotEqual(len(g1), len(g2))
+
+    def testGrowMutation(self):
+        g1 = np.array([[1.0,2.0,3.0], [4.0,5.0,6.0], [7.0,8.0,9.0]])
+        # print(g1, "(before)")
+        # (rate of 1 used to confirm mutation works)
+        g2 = genome.Genome.grow_mutate(g1, rate = 1)
+        # print(g2, "(after)")
+        self.assertGreater(len(g2), len(g1))
 unittest.main()
