@@ -150,7 +150,7 @@ class Genome():
                 idx = np.random.randint(len(gene))
                 # scales [-0.5 to 0.5] by the amount
                 r = np.random.rand() - 0.5 * amount
-                gene[idx] += r
+                gene[idx] = gene[idx] + r
         
         return dna
 
