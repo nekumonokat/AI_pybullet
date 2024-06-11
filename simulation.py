@@ -36,7 +36,8 @@ class Simulation():
                 pos, orn = p.getBasePositionAndOrientation(cid, physicsClientId = pid)
                 cr.update_position(pos)
         except:
-            print("sim failed cr links:", len(cr.get_expanded_links()))
+            # print("sim failed cr links:", len(cr.get_expanded_links()))
+            pass
 
     def update_motors(self, cid, cr):
         """

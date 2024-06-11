@@ -14,9 +14,9 @@ p.setGravity(0, 0, -10) # x, z, y
 p.setRealTimeSimulation(1)
 
 # HYPERPARAMETER TUNING: (same as test_ga)
-gene_count = 3
-render = 99
-cam = 100
+gene_count = 5
+render = 49
+cam = 10
 
 c = creature.Creature(gene_count = gene_count)
 dna = genlib.Genome.from_csv(str(render) + "_elite.csv") 
@@ -27,7 +27,7 @@ with open("test.urdf", "w") as f:
     f.write(c.to_xml())
 
 cid = p.loadURDF("test.urdf")
-p.resetBasePositionAndOrientation(cid, [0, 0, 3], [0, 0, 0, 1])
+p.resetBasePositionAndOrientation(cid, [0, 0, 5], [0, 0, 0, 1])
 c.update_position([0, 0, 0])
 
 # keeps simulation running
