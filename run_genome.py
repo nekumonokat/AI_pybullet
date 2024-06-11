@@ -14,8 +14,12 @@ p.setGravity(0, 0, -10) # x, z, y
 p.setRealTimeSimulation(1)
 
 # HYPERPARAMETER TUNING: (same as test_ga)
-c = creature.Creature(gene_count = 3)
-dna = genlib.Genome.from_csv("80_elite.csv") 
+gene_count = 3
+render = 99
+cam = 100
+
+c = creature.Creature(gene_count = gene_count)
+dna = genlib.Genome.from_csv(str(render) + "_elite.csv") 
 c.set_dna(dna)
 
 with open("test.urdf", "w") as f:
@@ -37,7 +41,7 @@ while True:
     
     # checking that youre getting distance travelled
     pos, orn = p.getBasePositionAndOrientation(cid)
-    p.resetDebugVisualizerCamera(8, 0, 200, pos)
+    p.resetDebugVisualizerCamera(cam, 0, 200, pos)
     c.update_position(pos)
     dist = c.get_distance_travelled()
     print(dist)

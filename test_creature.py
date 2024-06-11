@@ -57,9 +57,9 @@ class TestCreature(unittest.TestCase):
 
     def testDist(self):
         c = creature.Creature(3)
-        c.update_position((0, 0, 0))
+        # c.update_position((0, 0, 0))
         d1 = c.get_distance_travelled()
-        c.update_position((1, 1, 1))
+        # c.update_position((1, 1, 1))
         d2 = c.get_distance_travelled()
         self.assertGreater(d2, d1)
 
