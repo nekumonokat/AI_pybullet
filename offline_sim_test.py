@@ -14,9 +14,8 @@ p.setRealTimeSimulation(1)
 gene_counts = [3, 4, 5, 6, 7, 8, 9, 10]
 summary_file = "genecount_test_summary.txt"
 
-for run in range(5):
-    print("run:", run+1)
-    with open(summary_file, "w") as sumf:
+with open(summary_file, "w") as sumf:
+    for run in range(10):
         for gene_count in gene_counts:
             try:
                 cr = creature.Creature(gene_count = gene_count)
