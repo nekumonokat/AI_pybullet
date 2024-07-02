@@ -47,4 +47,4 @@ while True:
     print(dist)
 
     p.stepSimulation()
-    time.sleep(0.1)    
+    time.sleep(0.1)

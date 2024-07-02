@@ -11,7 +11,7 @@ class TestGA(unittest.TestCase):
 
         # HYPERPARAMETER TUNING:
         pop_size = 100
-        gene_count = 5
+        gene_count = 10
         gen_count = 50
 
         pop = poplib.Population(pop_size = pop_size, gene_count = gene_count)
