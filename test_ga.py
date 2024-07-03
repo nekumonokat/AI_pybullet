@@ -1,3 +1,4 @@
+# USED FOR MIDTERM
 import unittest
 import population as poplib
 import simulation as simlib
@@ -11,7 +12,7 @@ class TestGA(unittest.TestCase):
 
         # HYPERPARAMETER TUNING:
         pop_size = 100
-        gene_count = 10
+        gene_count = 8
         gen_count = 50
 
         pop = poplib.Population(pop_size = pop_size, gene_count = gene_count)

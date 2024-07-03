@@ -1,3 +1,4 @@
+# USED FOR MIDTERM
 # HYPERPARAMETER TUNING
 # NOT UNIT TESTING
 import pybullet as p
@@ -14,8 +15,8 @@ p.setGravity(0, 0, -10) # x, z, y
 p.setRealTimeSimulation(1)
 
 # HYPERPARAMETER TUNING: (same as test_ga)
-gene_count = 5
-render = 49
+gene_count = 8
+render = 0
 cam = 10
 
 c = creature.Creature(gene_count = gene_count)

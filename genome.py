@@ -1,3 +1,4 @@
+# USED FOR MIDTERM
 import numpy as np
 import copy
 

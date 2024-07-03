@@ -1,11 +1,9 @@
+# USED FOR MIDTERM
 import numpy as np
-import math
-import random
-import time
+import math, random, time
 import pybullet as p
 import pybullet_data
-import creature
-import genome
+import creature, genome
 
 p.connect(p.GUI)
 p.configureDebugVisualizer(p.COV_ENABLE_GUI, 0)
@@ -75,9 +73,9 @@ p.setAdditionalSearchPath('shapes/')
 mountain = p.loadURDF("gaussian_pyramid.urdf", mountain_position, mountain_orientation, useFixedBase = 1)
 
 # HYPERPARAMETER TUNING: (same as test_ga)
-gene_count = 5
-render = 99
-scale = 5
+gene_count = 10
+render = 25
+scale = 0.1
 
 c = creature.Creature(gene_count = gene_count)
 dna = genome.Genome.from_csv(str(render) + "_elite.csv")
@@ -89,7 +87,7 @@ with open('test.urdf', 'w') as f:
     f.write(c.to_xml())
 
 # load it into the sim
-cid = p.loadURDF('test.urdf', (5, 0, 2))
+cid = p.loadURDF('test.urdf', (10, 0, 5))
 c.update_position([0, 0, 0])
 m_pos, m_orn = p.getBasePositionAndOrientation(mountain)
 p.resetDebugVisualizerCamera(15, 20, 200, m_pos)
