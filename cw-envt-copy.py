@@ -60,9 +60,9 @@ def make_arena(arena_size = 10, wall_height = 1):
 
 p.setGravity(0, 0, -10)
 
-arena_size = 20
+arena_size = 30
 make_arena(arena_size = arena_size)
-#make_rocks(arena_size = arena_size)
+# make_rocks(arena_size = arena_size)
 
 mountain_position = (0, 0, -1)  # Adjust as needed
 mountain_orientation = p.getQuaternionFromEuler((0, 0, 0))
@@ -74,7 +74,7 @@ mountain = p.loadURDF("gaussian_pyramid.urdf", mountain_position, mountain_orien
 
 # HYPERPARAMETER TUNING: (same as test_ga)
 gene_count = 10
-render = 25
+render = 0
 scale = 0.1
 
 c = creature.Creature(gene_count = gene_count)
@@ -87,7 +87,7 @@ with open('test.urdf', 'w') as f:
     f.write(c.to_xml())
 
 # load it into the sim
-cid = p.loadURDF('test.urdf', (10, 0, 5))
+cid = p.loadURDF('test.urdf', (5, 0, 1))
 c.update_position([0, 0, 0])
 m_pos, m_orn = p.getBasePositionAndOrientation(mountain)
 p.resetDebugVisualizerCamera(15, 20, 200, m_pos)
@@ -111,8 +111,6 @@ while True:
     # checking that youre getting distance travelled
     pos, orn = p.getBasePositionAndOrientation(cid)
     c.update_position(pos)
-    # dist = c.get_distance_travelled()
-    # print(dist)
 
     # calculate the direction to the target
     direction = target_pos - np.array(pos)

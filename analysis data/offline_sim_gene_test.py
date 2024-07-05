@@ -11,15 +11,15 @@ floor = p.createMultiBody(floor_shape, floor_shape)
 p.setGravity(0, 0, -10) # x, z, y
 p.setRealTimeSimulation(1)
 
-gene_count = 8
-ranges = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
-summary_file = "len_rad_test_summary.txt"
+# generating random creature
+gene_counts = [3, 4, 5, 6, 7, 8, 9, 10]
+summary_file = "genecount_test_summary.txt"
 
 with open(summary_file, "w") as sumf:
-    for l_len in ranges:
-        for l_rad in ranges:
+    for run in range(10):
+        for gene_count in gene_counts:
             try:
-                cr = creature.Creature(gene_count, l_len, l_rad)
+                cr = creature.Creature(gene_count = gene_count)
 
                 # save to XML
                 with open("test.urdf", "w") as f:
@@ -50,8 +50,7 @@ with open(summary_file, "w") as sumf:
                         avg_dist += cr.get_distance_travelled()
                         count += 1
 
-                sumf.write(f"link_length: {l_len} link_radius: {l_rad} average_dist: {avg_dist/count}\n")
-                print(f"link_length: {l_len} link_radius: {l_rad} average_dist: {avg_dist/count}")
+                sumf.write(f"run: {run+1} gene_count: {gene_count} average_dist: {avg_dist/count}\n")
             
             except:
                 pass

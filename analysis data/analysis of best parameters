@@ -1,1 +1,2 @@
 gene count: When testing for the best gene count between 3 and 10, it was noted that the higher the gene count the better the average distance. However, due to computational power, a gene count of 8 will be chosen to prevent my code from crashing.
+link_length, link_radius: When testing for the best combination of link length and radius, it was noted that the best combination was link length of 0.5 and link radius of 0.7

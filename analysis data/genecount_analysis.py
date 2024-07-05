@@ -1,13 +1,12 @@
 from statistics import mean
 
-summary_file = "genecount_test_summary.txt"
+summary_file = "analysis data/genecount_test_summary.txt"
 gene_counts_data = {}
 
 with open(summary_file, "r") as f:
     for line in f:
         # getting the respective data
         entries = line.split()
-        run = int(entries[1])
         gene_count = int(entries[3])
         avg_dist = float(entries[5])
 

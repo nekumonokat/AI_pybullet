@@ -6,9 +6,9 @@ A threaded simulation was added, but it doesn't work on windows, as such a modif
 When testing the best gene count, it was noticed that the best would be the highest, but due to computational power, the max chosen would be 8. [genecount_analysis.py]
 
 Things to be modified:
-- link length [scale 1]: 0.1, 0.5 and 0.9 will be chosen
-- link radius [scale 1]: 0.1, 0.5 and 0.9 will be chosen
-- link mass [scale 1]: 0.3, 0.5, 0.7 and 0.9 will be chosen
+- link length [scale 1]: increments of 0.1 will be chosen
+- link radius [scale 1]: increments of 0.1 will be chosen
+- link mass [scale 1]: increments of 0.1 will be chosen
 - joint type: [0.1 FIXED], [0.9 REVOLUTE]
 - control waveform : [0.1 PULSE], [0.9 SINE]
 - control amp [scale 0.25]

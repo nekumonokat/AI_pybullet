@@ -34,9 +34,9 @@ class Motor:
         return output
 
 class Creature:
-    def __init__(self, gene_count):
+    def __init__(self, gene_count, l_len = 0.1, l_rad = 0.1):
         self.spec = genome.Genome.get_gene_spec()
-        self.dna = genome.Genome.get_random_genome(len(self.spec), gene_count)
+        self.dna = genome.Genome.get_random_genome(len(self.spec), gene_count, l_len, l_rad)
         self.flat_links = None
         self.motors = None
         self.get_flat_links()

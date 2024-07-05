@@ -4,13 +4,16 @@ import copy
 
 class Genome():
     @staticmethod # just sits there
-    def get_random_gene(length):
+    # HYPERPARAMETER TUNING: TESTING VALUES
+    def get_random_gene(length, l_len = 0.1, l_rad = 0.1):
         gene = np.array([np.random.random() for i in range(length)])
+        gene[1] = l_len
+        gene[2] = l_rad
         return gene
     
     @staticmethod
-    def get_random_genome(gene_length, gene_count):
-        genome = [Genome.get_random_gene(gene_length) for i in range(gene_count)]
+    def get_random_genome(gene_length, gene_count, l_len = 0.1, l_rad = 0.1):
+        genome = [Genome.get_random_gene(gene_length, l_len, l_rad) for i in range(gene_count)]
         return genome
     
     @staticmethod
@@ -217,8 +220,9 @@ class URDFLink():
         self.name = name
         self.parent_name = parent_name
         self.recur = recur
-        self.link_length = link_length
-        self.link_radius = link_radius
+        # HYPERPARAMETER TUNING: LOCKING VALUES
+        self.link_length = 0.5
+        self.link_radius = 0.7
         self.link_mass = link_mass
         self.joint_type = joint_type
         self.joint_axis_xyz = joint_axis_xyz
