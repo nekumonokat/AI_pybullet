@@ -5,15 +5,16 @@ import copy
 class Genome():
     @staticmethod # just sits there
     # HYPERPARAMETER TUNING: TESTING VALUES
-    def get_random_gene(length, l_len = 0.1, l_rad = 0.1):
+    def get_random_gene(length, l_len = 0.1, l_rad = 0.1, l_weight = 0.1):
         gene = np.array([np.random.random() for i in range(length)])
         gene[1] = l_len
         gene[2] = l_rad
+        gene[4] = l_weight
         return gene
     
     @staticmethod
-    def get_random_genome(gene_length, gene_count, l_len = 0.1, l_rad = 0.1):
-        genome = [Genome.get_random_gene(gene_length, l_len, l_rad) for i in range(gene_count)]
+    def get_random_genome(gene_length, gene_count, l_len = 0.1, l_rad = 0.1, l_weight = 0.1):
+        genome = [Genome.get_random_gene(gene_length, l_len, l_rad, l_weight) for i in range(gene_count)]
         return genome
     
     @staticmethod
@@ -23,7 +24,7 @@ class Genome():
             "link-length": {"scale": 1},
             "link-radius": {"scale": 1},
             "link-recurrence": {"scale": 4},
-            "link-mass": {"scale": 1},
+            "link-mass": {"scale": 4},
             "joint-type": {"scale": 1},
             "joint-parent": {"scale": 1},
             "joint-axis-xyz": {"scale": 1},
@@ -223,7 +224,7 @@ class URDFLink():
         # HYPERPARAMETER TUNING: LOCKING VALUES
         self.link_length = 0.5
         self.link_radius = 0.7
-        self.link_mass = link_mass
+        self.link_mass = 1.5
         self.joint_type = joint_type
         self.joint_axis_xyz = joint_axis_xyz
         self.joint_origin_rpy_1 = joint_origin_rpy_1

@@ -34,9 +34,9 @@ class Motor:
         return output
 
 class Creature:
-    def __init__(self, gene_count, l_len = 0.1, l_rad = 0.1):
+    def __init__(self, gene_count, l_len = 0.1, l_rad = 0.1, l_weight = 0.1):
         self.spec = genome.Genome.get_gene_spec()
-        self.dna = genome.Genome.get_random_genome(len(self.spec), gene_count, l_len, l_rad)
+        self.dna = genome.Genome.get_random_genome(len(self.spec), gene_count, l_len, l_rad, l_weight)
         self.flat_links = None
         self.motors = None
         self.get_flat_links()
@@ -116,5 +116,3 @@ class Creature:
         pos1 = np.array(self.start_position)
         pos2 = np.array(self.last_position)
         return np.linalg.norm(pos1 - pos2)
-
-        # return self.dist

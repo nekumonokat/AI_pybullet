@@ -20,7 +20,7 @@ render = 0
 cam = 10
 
 c = creature.Creature(gene_count = gene_count)
-dna = genlib.Genome.from_csv(str(render) + "_elite.csv") 
+dna = genlib.Genome.from_csv(str(render) + "_elite.csv")
 c.set_dna(dna)
 
 with open("test.urdf", "w") as f:

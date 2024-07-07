@@ -73,9 +73,9 @@ p.setAdditionalSearchPath('shapes/')
 mountain = p.loadURDF("gaussian_pyramid.urdf", mountain_position, mountain_orientation, useFixedBase = 1)
 
 # HYPERPARAMETER TUNING: (same as test_ga)
-gene_count = 10
-render = 0
-scale = 0.1
+gene_count = 8
+render = 50
+scale = 5
 
 c = creature.Creature(gene_count = gene_count)
 dna = genome.Genome.from_csv(str(render) + "_elite.csv")
@@ -87,7 +87,7 @@ with open('test.urdf', 'w') as f:
     f.write(c.to_xml())
 
 # load it into the sim
-cid = p.loadURDF('test.urdf', (5, 0, 1))
+cid = p.loadURDF('test.urdf', (5, 0, 5))
 c.update_position([0, 0, 0])
 m_pos, m_orn = p.getBasePositionAndOrientation(mountain)
 p.resetDebugVisualizerCamera(15, 20, 200, m_pos)
@@ -106,7 +106,7 @@ while True:
         # controlling each motor
         p.setJointMotorControl2(cid, jid,
                                 controlMode = p.VELOCITY_CONTROL, 
-                                targetVelocity = m.get_output(), force = 5)
+                                targetVelocity = m.get_output())
         
     # checking that youre getting distance travelled
     pos, orn = p.getBasePositionAndOrientation(cid)
