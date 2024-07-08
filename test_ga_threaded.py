@@ -4,6 +4,7 @@ import population as poplib
 import simulation as simlib
 import creature as crlib
 import genome as genlib
+import simulation
 import numpy as np
 import csv
 
@@ -17,7 +18,9 @@ class TestGA(unittest.TestCase):
         for pop_size in ranges:
             for gen_count in ranges:
                 pop = poplib.Population(pop_size = pop_size, gene_count = gene_count)
-                sim = simlib.Simulation()
+                sim = simulation.ThreadedSim(pool_size = 16)
+                # sim = simlib.Simulation()
+                
                 summary_file = "pop" + str(pop_size) + "_gen" + str(gen_count) + "_summary.csv"
                 mid_gen_count = gen_count // 2
 

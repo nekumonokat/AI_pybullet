@@ -81,7 +81,7 @@ class ThreadedSim():
 
                 # works out sim_idx
                 sim_idx = 1 % len(self.sims)
-                print("eval_pop: c idx", start_idx, ", sim_idx", sim_idx)
+                # print("eval_pop: c idx", start_idx, ", sim_idx", sim_idx)
 
                 this_pool_args.append([
                     self.sims[sim_idx],
